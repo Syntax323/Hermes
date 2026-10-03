@@ -8,3 +8,37 @@ body {background-color: black; color: white;}
     margin-left: auto;
     margin-right: auto;
 }
+
+.loginpage {
+    border-radius: 24px;
+    display: grid;
+    background-color: 141414;
+    width: 25vw;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 11.5%;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginbox{
+    width: 12vw;
+    height: 5vh;
+    border-radius: 10px;
+}
+
+.loginbutton{
+    border-radius: 6px;
+    width: 8vw;
+    height: 4vh;
+}
+
+textarea {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.loginlogo{
+    padding-bottom: 20%;
+}
