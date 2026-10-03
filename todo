@@ -8,3 +8,6 @@ sqlite database
 add username to chat screen
 make buttons for login page
 make logo, color scheme
+write json of message to messages.json
+make cookie between login and chat
+replace alias with username when cookie works
