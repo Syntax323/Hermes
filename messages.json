@@ -1,13 +1,13 @@
 [
     {
         "messageId": 1,
-        "username": "1",
+        "alias": "1",
         "message": "Hello!",
         "time": "2026-10-01T22:05:00"
     },
     {
         "messageId": 2,
-        "username": "2",
+        "alias": "2",
         "message": "Hey!",
         "time": "2026-10-01T22:05:10"
     }

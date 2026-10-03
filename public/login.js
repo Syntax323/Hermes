@@ -27,6 +27,7 @@ function login() {
     if (user) {
         console.log("login success");
         window.location.href = "chat.html";
+        setCookie(); 
     } else {
         console.log("login failed");
         toggleText();
