@@ -5,6 +5,9 @@ var password;
 var message;
 var allmessages;
 var messageId = 2;
+var alias = Math.floor(Math.random() * 99)
+
+// time variables
 var year;
 var month ;
 var day;
@@ -12,8 +15,9 @@ var hour;
 var minute;
 var second;
 const d = new Date();
-var alias = Math.floor(Math.random() * 99)
 
+
+// get time, probably inefficient asf
 function msgtime(){
     year = d.getFullYear();
     month = d.getMonth();
@@ -24,6 +28,7 @@ function msgtime(){
     time = (year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second);
 }
 
+// send message, currently just to console
 function send() {
     message = document.getElementById("typing").value;
     messageId += 1;
@@ -31,6 +36,7 @@ function send() {
     console.log(JSON.stringify({messageId, alias, message, time}, null, "\t"));
 }
 
+// get messages and display
 fetch("/messages.json")
     .then(response => response.json())
     .then(messages => {
