@@ -5,7 +5,8 @@ var password;
 var message;
 var allmessages;
 var lastmsg;
-var alias = Math.floor(Math.random() * 99)
+var alias = Math.floor(Math.random() * 99);
+var time;
 const d = new Date();
 
 // load past messages on page load
@@ -19,17 +20,39 @@ function msgtime() {
 
 // send message on enter press
 var typing = document.getElementById("typing");
-typing.addEventListener("keydown", function (event){
-if (event.code === "Enter") {
-    send();
-  }
+
+typing.addEventListener("keydown", function (event) {
+    if (event.code === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        send();
+    }
 });
+
+// create a message element
+function createMessageElement(message) {
+    const messageElement = document.createElement("div");
+    messageElement.className = "message";
+
+    const usernameElement = document.createElement("span");
+    usernameElement.className = "username";
+    usernameElement.textContent = message.alias + ":";
+
+    const textElement = document.createElement("span");
+    textElement.className = "message-text";
+    textElement.textContent = message.message;
+
+    messageElement.appendChild(usernameElement);
+    messageElement.appendChild(textElement);
+
+    return messageElement;
+}
 
 // send message
 function send() {
     message = document.getElementById("typing").value.trim();
 
     if (!message) return;
+
     msgtime();
 
     const newMessage = {
@@ -60,7 +83,7 @@ function send() {
 }
 
 // get messages and display
-function loadmsgs(){
+function loadmsgs() {
     fetch("/messages.json")
     .then(response => response.json())
     .then(messages => {
@@ -69,16 +92,13 @@ function loadmsgs(){
         chat.replaceChildren();
 
         messages.forEach(message => {
-            const messageElement = document.createElement("p");
-
-            messageElement.textContent =
-                message.alias + ": " + message.message;
-
-            chat.appendChild(messageElement);
+            chat.appendChild(createMessageElement(message));
         });
+
+        chat.scrollTop = chat.scrollHeight;
     })
     .catch(error => console.error("Error loading messages:", error));
-    }
+}
 
 // show when new messages are sent
 const events = new EventSource("/events");
@@ -87,10 +107,7 @@ events.onmessage = function(event) {
     const message = JSON.parse(event.data);
 
     const chat = document.getElementById("chat");
-    const messageElement = document.createElement("p");
+    chat.appendChild(createMessageElement(message));
 
-    messageElement.textContent =
-        message.alias + ": " + message.message;
-
-    chat.appendChild(messageElement);
+    chat.scrollTop = chat.scrollHeight;
 };
