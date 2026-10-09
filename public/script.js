@@ -4,56 +4,93 @@ var username;
 var password;
 var message;
 var allmessages;
-var messageId = 2;
+var lastmsg;
 var alias = Math.floor(Math.random() * 99)
-
-// time variables
-var year;
-var month ;
-var day;
-var hour;
-var minute;
-var second;
 const d = new Date();
 
+// load past messages on page load
+window.onload = loadmsgs;
 
-// get time, probably inefficient asf
-function msgtime(){
-    year = d.getFullYear();
-    month = d.getMonth();
-    day = d.getDate();
-    hour = d.getHours();
-    minute = d.getMinutes();
-    second = d.getSeconds();
-    time = (year + "-" + month + "-" + day + "-" + hour + "-" + minute + "-" + second);
+// get time
+function msgtime() {
+    const d = new Date();
+    time = d.toISOString();
 }
 
-// send message, currently just to console
+// send message on enter press
+var typing = document.getElementById("typing");
+typing.addEventListener("keydown", function (event){
+if (event.code === "Enter") {
+    send();
+  }
+});
+
+// send message
 function send() {
-    message = document.getElementById("typing").value;
-    messageId += 1;
+    message = document.getElementById("typing").value.trim();
+
+    if (!message) return;
     msgtime();
-    console.log(JSON.stringify({messageId, alias, message, time}, null, "\t"));
+
+    const newMessage = {
+        alias: alias,
+        message: message,
+        time: time
+    };
+
+    fetch("/messages.json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newMessage)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to save message");
+        }
+
+        return response.json();
+    })
+    .then(() => {
+        document.getElementById("typing").value = "";
+        loadmsgs();
+    })
+    .catch(error => console.error("Error saving message:", error));
 }
 
 // get messages and display
-fetch("/messages.json")
+function loadmsgs(){
+    fetch("/messages.json")
     .then(response => response.json())
     .then(messages => {
-
         const chat = document.getElementById("chat");
 
-        messages.forEach(message => {
+        chat.replaceChildren();
 
+        messages.forEach(message => {
             const messageElement = document.createElement("p");
 
             messageElement.textContent =
-                message.alias + ": " + message.message; //replace with message.username when cookie works
+                message.alias + ": " + message.message;
 
             chat.appendChild(messageElement);
         });
-
     })
-    .catch(error => {
-        console.error("Error loading messages:", error);
-    });
+    .catch(error => console.error("Error loading messages:", error));
+    }
+
+// show when new messages are sent
+const events = new EventSource("/events");
+
+events.onmessage = function(event) {
+    const message = JSON.parse(event.data);
+
+    const chat = document.getElementById("chat");
+    const messageElement = document.createElement("p");
+
+    messageElement.textContent =
+        message.alias + ": " + message.message;
+
+    chat.appendChild(messageElement);
+};
