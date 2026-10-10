@@ -1,13 +1,6 @@
-nodejs to write to messages json
-show past messages from messages json
-add new messages to messages json
-make home page
 make account creation and add to users json
-stylize
 sqlite database
 add username to chat screen
-make buttons for login page
 make logo, color scheme
-write json of message to messages.json
 make cookie between login and chat
 replace alias with username when cookie works
