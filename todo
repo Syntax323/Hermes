@@ -1,6 +1,7 @@
-make account creation and add to users json
 sqlite database
 add username to chat screen
 make logo, color scheme
 make cookie between login and chat
 replace alias with username when cookie works
+change newusername and newpassword back to username and password
+create user creation screen or page
