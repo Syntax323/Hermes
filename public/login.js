@@ -7,7 +7,7 @@ var i = 1;
 fetch('/users.json')
     .then(response => response.json())
     .then(data => {
-        users = data.users;
+        users = data;
         console.log(data);
         console.log(users);
     })
@@ -20,14 +20,13 @@ function login() {
     password = document.getElementById("password").value;
 
     user = users.find(function(user) {
-        return user.username == username && 
+        return user.alias == username && 
                user.password == password;
     });
 
     if (user) {
         console.log("login success");
         window.location.href = "chat.html";
-        setCookie(); 
     } else {
         console.log("login failed");
         toggleText();
