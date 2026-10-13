@@ -73,6 +73,52 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.url === "/users.json" && req.method === "POST") {
+        let body = "";
+
+        req.on("data", chunk => {
+            body += chunk;
+        });
+
+        req.on("end", () => {
+            try {
+                const newAccount = JSON.parse(body);
+
+                const usersFile = path.join(__dirname, "users.json");
+
+                const users = JSON.parse(
+                    fs.readFileSync(usersFile, "utf8")
+                );
+
+                users.push(newAccount);
+
+                fs.writeFileSync(
+                    usersFile,
+                    JSON.stringify(users, null, 4)
+                );
+
+                res.writeHead(200, {
+                    "Content-Type": "application/json"
+                });
+
+                res.end(JSON.stringify({ success: true }));
+            } catch (error) {
+                console.error("Error saving account:", error);
+
+                res.writeHead(500, {
+                    "Content-Type": "application/json"
+                });
+
+                res.end(JSON.stringify({
+                    success: false,
+                    error: "Could not save account"
+                }));
+            }
+        });
+
+        return;
+    }
+
 
     // Serve files from public
     let filePath;
