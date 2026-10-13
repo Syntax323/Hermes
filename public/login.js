@@ -49,3 +49,37 @@ function toggleText() {
             }
         }
 };
+
+//new user
+function newuser() {
+    username = document.getElementById("newusername").value.trim();
+    password = document.getElementById("newpassword").value.trim();
+
+    if (!username || !password) return;
+
+    const newAccount = {
+        alias: username,
+        password: password
+    };
+
+    fetch("/users.json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newAccount)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to save username");
+        }
+
+        return response.json();
+        console.log(response.json);
+    })
+    .then(() => {
+        document.getElementById("newusername").value = "";
+        document.getElementById("newpassword").value = "";
+    })
+    .catch(error => console.error("Error saving message:", error));
+};
