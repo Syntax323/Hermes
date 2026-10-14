@@ -5,12 +5,35 @@ var password;
 var message;
 var allmessages;
 var lastmsg;
-var alias = Math.floor(Math.random() * 99);
 var time;
 const d = new Date();
 
 // load past messages on page load
-window.onload = loadmsgs;
+window.addEventListener("DOMContentLoaded", function() {
+    getuser();
+    loadmsgs();
+});
+
+function getCookie(name) {
+    let cookieArr = document.cookie.split(";");
+    
+    for(let i = 0; i < cookieArr.length; i++) {
+        let cookiePair = cookieArr[i].split("=");
+
+        if(name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair.slice(1).join("="));
+        }
+    }
+    
+    // Return null if not found
+    return null;
+}
+
+// get username from cookie
+function getuser() {
+    username = getCookie("Username");
+    console.log(username);
+}
 
 // get time
 function msgtime() {
@@ -35,7 +58,7 @@ function createMessageElement(message) {
 
     const usernameElement = document.createElement("span");
     usernameElement.className = "username";
-    usernameElement.textContent = message.alias + ":";
+    usernameElement.textContent = message.username + ":";
 
     const textElement = document.createElement("span");
     textElement.className = "message-text";
@@ -49,14 +72,24 @@ function createMessageElement(message) {
 
 // send message
 function send() {
-    message = document.getElementById("typing").value.trim();
+    const input = document.getElementById("typing");
+    message = input.value.trim();
 
     if (!message) return;
+
+    if (message.startsWith("/")) {
+        handleCommand(message);
+        input.value = "";
+        return;
+    }
+
+    // Keep the rest of your existing normal message-sending code here.
+
 
     msgtime();
 
     const newMessage = {
-        alias: alias,
+        username: username,
         message: message,
         time: time
     };
@@ -111,3 +144,101 @@ events.onmessage = function(event) {
 
     chat.scrollTop = chat.scrollHeight;
 };
+
+window.addEventListener("DOMContentLoaded", function() {
+    loadmsgs();
+});
+
+
+function handleCommand(message) {
+    const parts = message.slice(1).trim().split(/\s+/);
+    const command = parts[0].toLowerCase();
+    const args = parts.slice(1);
+
+    switch (command) {
+        case "help":
+            console.log("Available commands: /help, /friend <username>");
+            break;
+
+        case "friend": {
+            const friendUsername = args.join(" ").trim();
+
+            if (!friendUsername) {
+                console.log("Usage: /friend <username>");
+                break;
+            }
+
+            fetch("/friends", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    friend: friendUsername
+                })
+            })
+            .then(async response => {
+                const data = await response.json();
+
+                console.log("Status:", response.status);
+                console.log("Response:", data);
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Request failed");
+                }
+
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error("Error adding friend:", error);
+            });
+
+            break;
+        }
+
+        default:
+            console.log("Unknown command: " + command);
+            break;
+    }
+}
+
+
+// friends list
+/* 
+retrieve friends from users.json
+    -get user from username
+    -find user in users.json
+    -get friends from users.json user
+display on friendslist
+
+Method/property	Purpose
+fetch()	Retrieve data from your server
+.find()	Find the current user in the array
+.friends	Access that user's friends list
+.forEach()	Iterate over each friend
+document.createElement()	Create an element for each friend
+.appendChild()	Add each element to the page
+*/
+
+function friendsList() {
+    fetch('/users.json')
+    .then(response => response.json())
+    .then(data => {
+        users = data;
+        console.log(data);
+        console.log(users);
+    })
+    .then(messages => {
+        const friends = document.getElementById("friends");
+
+        friends.replaceChildren();
+
+        messages.forEach(message => {
+            chat.appendChild(createMessageElement(message));
+        });
+
+        chat.scrollTop = chat.scrollHeight;
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+}

@@ -20,12 +20,13 @@ function login() {
     password = document.getElementById("password").value;
 
     user = users.find(function(user) {
-        return user.alias == username && 
+        return user.username == username && 
                user.password == password;
     });
 
     if (user) {
-        console.log("login success");
+        console.log("login success"); 
+        document.cookie = "Username=" + encodeURIComponent(username) + "; path=/";
         window.location.href = "chat.html";
     } else {
         console.log("login failed");
@@ -57,7 +58,7 @@ function newuser() {
     if (!username || !password) return;
 
     const newAccount = {
-        alias: username,
+        username: username,
         password: password
     };
 
@@ -70,7 +71,7 @@ function newuser() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Failed to save username");
+            throw new Error("Failed to save user");
         }
 
         return response.json();
@@ -80,5 +81,5 @@ function newuser() {
         document.getElementById("newusername").value = "";
         document.getElementById("newpassword").value = "";
     })
-    .catch(error => console.error("Error saving message:", error));
+    .catch(error => console.error("Error saving user:", error));
 };
