@@ -37,15 +37,12 @@ function login() {
 // show wrong user/pass text
 function toggleText() {
     const textElement = document.getElementById("page1");
-    console.log(i);
         while(i == 1) {
             if (textElement.style.display === "none") {
                 textElement.style.display = "block";
                 i = 2;
-                console.log(i);
             } else {
                 textElement.style.display = "none";
-                console.log(i);
             }
         }
 };
@@ -62,6 +59,19 @@ function newuser() {
         password: password
     };
 
+    user = users.find(function(user) {
+        return user.username == username;
+    });
+
+    if (user) {
+        toggleText();
+        throw new Error("User already exists")
+    } else {
+        setTimeout(() => {
+        window.location.href = "index.html";
+    }, 500);
+    }
+
     fetch("/users.json", {
         method: "POST",
         headers: {
@@ -69,6 +79,7 @@ function newuser() {
         },
         body: JSON.stringify(newAccount)
     })
+    
     .then(response => {
         if (!response.ok) {
             throw new Error("Failed to save user");

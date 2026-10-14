@@ -24,14 +24,15 @@ function getCookie(name) {
             return decodeURIComponent(cookiePair.slice(1).join("="));
         }
     }
-    
-    // Return null if not found
     return null;
 }
 
 // get username from cookie
 function getuser() {
     username = getCookie("Username");
+    if (username == null) {
+        window.location.href = "index.html";
+    }
     console.log(username);
 }
 
