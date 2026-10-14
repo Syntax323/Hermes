@@ -9,3 +9,6 @@ add friends
 add multiple chat channels
 add side apps, pinned messages, games
 private messages
+- New friends menu doesnt work yet, the code is in there kinda but not really and not done
+- Need to make something to stop users from being created with an already existing username
+- Need to add messages.json tag for multi channel support for more than 1 chatroom per server instance
