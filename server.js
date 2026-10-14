@@ -73,6 +73,113 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    
+if (req.url === "/friends" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", chunk => {
+        body += chunk;
+    });
+
+    req.on("end", () => {
+        try {
+            const data = JSON.parse(body);
+            const usersFile = path.join(__dirname, "users.json");
+
+            const users = JSON.parse(
+                fs.readFileSync(usersFile, "utf8")
+            );
+
+            const currentUser = users.find(
+                user => user.username === data.username
+            );
+
+            const friendUser = users.find(
+                user => user.username.toLowerCase() ===
+                        data.friend.trim().toLowerCase()
+            );
+
+            if (!currentUser) {
+                res.writeHead(404, {
+                    "Content-Type": "application/json"
+                });
+                res.end(JSON.stringify({
+                    message: "User not found."
+                }));
+                return;
+            }
+
+            if (!friendUser) {
+                res.writeHead(404, {
+                    "Content-Type": "application/json"
+                });
+                res.end(JSON.stringify({
+                    message: "That username does not exist."
+                }));
+                return;
+            }
+
+            if (currentUser.username === friendUser.username) {
+                res.writeHead(400, {
+                    "Content-Type": "application/json"
+                });
+                res.end(JSON.stringify({
+                    message: "You cannot add yourself."
+                }));
+                return;
+            }
+
+            if (!currentUser.friends) {
+                currentUser.friends = [];
+            }
+
+            const alreadyFriend = currentUser.friends.some(
+                friend => friend.toLowerCase() ===
+                          friendUser.username.toLowerCase()
+            );
+
+            if (alreadyFriend) {
+                res.writeHead(200, {
+                    "Content-Type": "application/json"
+                });
+                res.end(JSON.stringify({
+                    message: "Already friends with " +
+                             friendUser.username + "."
+                }));
+                return;
+            }
+
+            currentUser.friends.push(friendUser.username);
+
+            fs.writeFileSync(
+                usersFile,
+                JSON.stringify(users, null, 4)
+            );
+
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
+            res.end(JSON.stringify({
+                message: "Added " + friendUser.username +
+                         " to your friends list."
+            }));
+
+        } catch (error) {
+            console.error("Friend command error:", error);
+
+            res.writeHead(400, {
+                "Content-Type": "application/json"
+            });
+            res.end(JSON.stringify({
+                message: "Could not add friend."
+            }));
+        }
+    });
+
+    return;
+}
+
+
     if (req.url === "/users.json" && req.method === "POST") {
         let body = "";
 
