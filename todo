@@ -3,3 +3,9 @@ add username to chat screen
 make logo, color scheme
 make cookie between login and chat
 replace alias with username when cookie works
+check existing users when making new users, make text that says user already exists visible, when it works show user created text
+make it where if theres no username cookie it auto redirects to the login page
+add friends
+add multiple chat channels
+add side apps, pinned messages, games
+private messages
