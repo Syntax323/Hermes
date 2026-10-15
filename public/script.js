@@ -12,6 +12,7 @@ const d = new Date();
 window.addEventListener("DOMContentLoaded", function() {
     getuser();
     loadmsgs();
+    friendsList();
 });
 
 function getCookie(name) {
@@ -134,7 +135,7 @@ function loadmsgs() {
     .catch(error => console.error("Error loading messages:", error));
 }
 
-// show when new messages are sent
+// Show when new messages are sent
 const events = new EventSource("/events");
 
 events.onmessage = function(event) {
@@ -146,8 +147,20 @@ events.onmessage = function(event) {
     chat.scrollTop = chat.scrollHeight;
 };
 
+// Show when a friend is added
+events.addEventListener("friendAdded", function(event) {
+    const data = JSON.parse(event.data);
+
+    // Refresh only if the updated list belongs to this user
+    if (data.username === username) {
+        friendsList();
+    }
+});
+
 window.addEventListener("DOMContentLoaded", function() {
+    getuser();
     loadmsgs();
+    friendsList();
 });
 
 
@@ -222,24 +235,36 @@ document.createElement()	Create an element for each friend
 .appendChild()	Add each element to the page
 */
 
+
 function friendsList() {
     fetch('/users.json')
     .then(response => response.json())
-    .then(data => {
-        users = data;
-        console.log(data);
-        console.log(users);
-    })
-    .then(messages => {
+    .then(users => {
         const friends = document.getElementById("friends");
 
         friends.replaceChildren();
 
-        messages.forEach(message => {
-            chat.appendChild(createMessageElement(message));
+        // Find the currently logged-in user
+        const currentUser = users.find(user =>
+            user.username === username
+        );
+
+        if (!currentUser) {
+            console.log("Current user not found");
+            return;
+        }
+
+        // Get their friends, or an empty array
+        const userFriends = currentUser.friends || [];
+
+        // Display each friend
+        userFriends.forEach(friend => {
+            const friendElement = document.createElement("div");
+            friendElement.textContent = friend;
+            friends.appendChild(friendElement);
         });
 
-        chat.scrollTop = chat.scrollHeight;
+        console.log("Friends:", userFriends);
     })
-    .catch(error => console.error('Error loading JSON:', error));
+    .catch(error => console.error("Error loading JSON:", error));
 }

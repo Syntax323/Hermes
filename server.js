@@ -161,8 +161,16 @@ if (req.url === "/friends" && req.method === "POST") {
             });
             res.end(JSON.stringify({
                 message: "Added " + friendUser.username +
-                         " to your friends list."
+                        " to your friends list."
             }));
+
+            // Tell connected clients that the friends list changed
+            for (const client of clients) {
+                client.write(`event: friendAdded\ndata: ${JSON.stringify({
+                    username: currentUser.username,
+                    friend: friendUser.username
+                })}\n\n`);
+            }
 
         } catch (error) {
             console.error("Friend command error:", error);
@@ -174,6 +182,7 @@ if (req.url === "/friends" && req.method === "POST") {
                 message: "Could not add friend."
             }));
         }
+        
     });
 
     return;
