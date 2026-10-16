@@ -34,7 +34,7 @@ body {
 }
 
 .chatbox {
-    background-color: #73ff8390;
+    background-color: #96e0efa0;
     color: black;
     width: 80%;
     height: 100%;
@@ -73,7 +73,7 @@ h3.friends-title {
 }
 
 .friends {
-    background-color: #96e0efa0;
+    background-color: #73ff8390;
     color: black;
     width: 100%;
     flex: 1;
