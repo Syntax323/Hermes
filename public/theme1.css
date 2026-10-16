@@ -1,0 +1,148 @@
+body {
+    color: white;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.background-image {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    display: block;
+    background-image: url('Assets/frutigerAero/bg1.jpg');
+    filter: brightness(.7);
+    background-size: cover;
+    width: 115%;
+    height: 115%;
+    margin-top: -65px;
+    margin-left: -25px;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.top {
+    display: flex;
+    width: 100%;
+    height: 93vh;
+    gap: 1%;
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.chatbox {
+    background-color: #73ff8390;
+    color: black;
+    width: 80%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 1vw;
+    padding: .5% 1%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    line-height: 160%;
+    font-size: larger;
+    font-family: sans-serif;
+    scrollbar-width: thin;
+    min-width: 0;
+}
+
+.friends-container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 100%;
+    min-width: 0;
+}
+
+.friends-title h3{
+    color: white;
+    margin: 0;
+    padding: 0 0 8px 5px;
+    font-size: 16px;
+    flex-shrink: 0;
+    font-family: sans-serif;
+}
+
+h3.friends-title {
+    font-family: sans-serif !important;
+}
+
+.friends {
+    background-color: #96e0efa0;
+    color: black;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    box-sizing: border-box;
+    border-radius: 1vw;
+    padding: 4% 5%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: larger;
+    font-family: sans-serif;
+    scrollbar-width: thin;
+}
+
+.typing{
+    width: 55%;
+    height: 5vh;
+    border-radius: .75vw 0vw 0vw .75vw;
+    border: none;
+    color: black;
+    background-color: #96d3eff0;
+    padding-top: .8%;
+    padding-left: 1%;
+    resize: none;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    overflow-y: auto;
+}
+
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.username {
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.message-text {
+    min-width: 0;
+    flex: 1;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.send{
+    width: 6%;
+    height: 5vh;
+    border-radius: 0vw .75vw .75vw 0vw;
+    border: none;
+    background-color: #01ef54f4;
+    color: white;
+}
+
+.ui {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+textarea, textarea:focus{
+    resize: none;
+    border: none;
+    outline: none;
+}
