@@ -12,11 +12,11 @@ body {
     right: 0;
     z-index: -1;
     display: block;
-    background-image: url('Assets/Images/loginbg.jpg');
+    background-image: url('theme1Assets/bg1.avif');
+    filter: brightness(.7);
     background-size: cover;
     width: 115%;
     height: 115%;
-    filter: brightness(.25);
     margin-top: -65px;
     margin-left: -25px;
 }
@@ -34,7 +34,8 @@ body {
 }
 
 .chatbox {
-    background-color: #000000E0;
+    background-color: #96e0efa0;
+    color: black;
     width: 80%;
     height: 100%;
     box-sizing: border-box;
@@ -72,8 +73,8 @@ h3.friends-title {
 }
 
 .friends {
-    background-color: #000000E0;
-    color: white;
+    background-color: #73ff8390;
+    color: black;
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -92,8 +93,8 @@ h3.friends-title {
     height: 5vh;
     border-radius: .75vw 0vw 0vw .75vw;
     border: none;
-    color: white;
-    background-color: #000000a0;
+    color: black;
+    background-color: #96d3eff0;
     padding-top: .8%;
     padding-left: 1%;
     resize: none;
@@ -128,7 +129,7 @@ h3.friends-title {
     height: 5vh;
     border-radius: 0vw .75vw .75vw 0vw;
     border: none;
-    background-color: #2d8bea;
+    background-color: #01ef54f4;
     color: white;
 }
 

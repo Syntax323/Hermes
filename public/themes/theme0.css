@@ -8,15 +8,15 @@ body {
 }
 .background-image {
     position: fixed;
-    left: 0;
+    left: -5%;
     right: 0;
     z-index: -1;
     display: block;
-    background-image: url('Assets/frutigerAero/bg1.jpg');
-    filter: brightness(.7);
+    background-image: url('theme0Assets/hermesbg1.avif');
     background-size: cover;
-    width: 115%;
-    height: 115%;
+    width: 110%;
+    height: 110%;
+    filter: brightness(.6);
     margin-top: -65px;
     margin-left: -25px;
 }
@@ -34,8 +34,7 @@ body {
 }
 
 .chatbox {
-    background-color: #96e0efa0;
-    color: black;
+    background-color: #041120a0;
     width: 80%;
     height: 100%;
     box-sizing: border-box;
@@ -73,8 +72,8 @@ h3.friends-title {
 }
 
 .friends {
-    background-color: #73ff8390;
-    color: black;
+    background-color: #041120a0;
+    color: white;
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -93,8 +92,8 @@ h3.friends-title {
     height: 5vh;
     border-radius: .75vw 0vw 0vw .75vw;
     border: none;
-    color: black;
-    background-color: #96d3eff0;
+    color: white;
+    background-color: #041120d0;
     padding-top: .8%;
     padding-left: 1%;
     resize: none;
@@ -129,7 +128,7 @@ h3.friends-title {
     height: 5vh;
     border-radius: 0vw .75vw .75vw 0vw;
     border: none;
-    background-color: #01ef54f4;
+    background-color: #00a0c4;
     color: white;
 }
 
