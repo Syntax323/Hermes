@@ -1,4 +1,4 @@
-![Alt text](public/Assets/images/logo.avif)
+<img src="public/Assets/images/logo.avif" width="500px">
 # Hermes
 making a chatroom messenger thing  
 node.js required (cmd: node server.js)  
