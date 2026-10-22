@@ -275,6 +275,10 @@ if (req.url === "/friends" && req.method === "POST") {
         res.writeHead(200);
         res.end(data);
     });
+    
+    if (req.path === '/.well-known/appspecific/com.chrome.devtools.json') {
+        return res.status(204).end();
+    }
 });
 
 
