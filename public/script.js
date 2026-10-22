@@ -72,6 +72,9 @@ function createMessageElement(message) {
     return messageElement;
 }
 
+getuser();
+document.getElementById("typing").placeholder = "Typing as: " + username;
+
 // send message
 function send() {
     const input = document.getElementById("typing");
@@ -84,9 +87,6 @@ function send() {
         input.value = "";
         return;
     }
-
-    // Keep the rest of your existing normal message-sending code here.
-
 
     msgtime();
 
@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", function() {
     friendsList();
 });
 
-
+// slash commands
 function handleCommand(message) {
     const parts = message.slice(1).trim().split(/\s+/);
     const command = parts[0].toLowerCase();
