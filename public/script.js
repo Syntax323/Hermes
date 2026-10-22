@@ -72,6 +72,7 @@ function createMessageElement(message) {
     return messageElement;
 }
 
+// show username in typing box
 getuser();
 document.getElementById("typing").placeholder = "Typing as: " + username;
 
@@ -157,12 +158,6 @@ events.addEventListener("friendAdded", function(event) {
     }
 });
 
-window.addEventListener("DOMContentLoaded", function() {
-    getuser();
-    loadmsgs();
-    friendsList();
-});
-
 // slash commands
 function handleCommand(message) {
     const parts = message.slice(1).trim().split(/\s+/);
@@ -171,7 +166,7 @@ function handleCommand(message) {
 
     switch (command) {
         case "help":
-            console.log("Available commands: /help, /friend <username>");
+            console.log("Available commands: /help, /friend <username>, /unfriend <username>, /customize");
             break;
 
         case "friend": {
@@ -210,6 +205,50 @@ function handleCommand(message) {
 
             break;
         }
+    case "unfriend": { // dont use this it does the same thing as friend
+            const friendUsername = args.join(" ").trim();
+
+            if (!friendUsername) {
+                console.log("Usage: /unfriend <username>");
+                break;
+            }
+
+            fetch("/friends", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    friend: friendUsername
+                })
+            })
+            .then(async response => {
+                const data = await response.json();
+
+                console.log("Status:", response.status);
+                console.log("Response:", data);
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Request failed");
+                }
+
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error("Error adding friend:", error);
+            });
+
+            break;
+    }
+    case "customize": 
+        window.location.href = "customize.html";
+        break;
+    
+    case "logout":
+        document.cookie = "Username=" + null + "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+        window.location.href = "index.html";
+        break;
 
         default:
             console.log("Unknown command: " + command);
