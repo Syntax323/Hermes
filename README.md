@@ -1,4 +1,4 @@
-# Messenger
+# Hermes
 making a chatroom messenger thing  
 node.js required (cmd: node server.js)  
 sqlite db soon™  
@@ -11,8 +11,8 @@ CHANGE PORT AT BOTTOM OF server.js
 Unfriend - Only friend  
 Unlimited rooms - Currently only 1  
 Send all formats - Currently only text  
-User customization - None  
-Client Customization - None  
+User customization - In Progress
+Client Customization - In Progress  
 User to User Direct Messaging - None  
 Calling and Voice channels - None  
 SQLite DB - Currently Json db  
