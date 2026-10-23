@@ -6,6 +6,9 @@ var message;
 var allmessages;
 var lastmsg;
 var time;
+var theme;
+var pfp;
+var nc;
 const d = new Date();
 
 // load past messages on page load
@@ -31,10 +34,25 @@ function getCookie(name) {
 // get username from cookie
 function getuser() {
     username = getCookie("Username");
+    theme = getCookie("Theme");
+    pfp = getCookie("Pfp")
+    nc = getCookie("Namecolor");
     if (username == null) {
         window.location.href = "index.html";
     }
+    if (theme == null) {
+        document.cookie = "Theme=theme0" + "; path=/";
+    }
+    if (pfp == null) {
+        document.cookie = "Pfp=pfp0" + "; path=/";
+    }
+    if (nc == null) {
+        document.cookie = "Namecolor=white" + "; path=/";
+    }
     console.log(username);
+    console.log(theme);
+    console.log(pfp)
+    console.log(nc);
 }
 
 // get time
