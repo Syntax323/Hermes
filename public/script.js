@@ -49,10 +49,8 @@ function getuser() {
     if (nc == null) {
         document.cookie = "Namecolor=white" + "; path=/";
     }
-    console.log(username);
-    console.log(theme);
-    console.log(pfp)
-    console.log(nc);
+    themelocation = document.getElementById("theme");
+    themelocation.href = "themes/" + theme + ".css";
 }
 
 // get time
