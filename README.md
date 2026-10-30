@@ -17,3 +17,10 @@ Client Customization - 3 Themes
 User to User Direct Messaging - None  
 Calling and Voice channels - None  
 SQLite DB - Currently Json db  
+
+# Commands
+/help - show all commands  
+/friend <username> - add a friend  
+/unfriend <username> - remove a friend (Doesnt work yet)  
+/customize - send to customization page, only themes currently work  
+/logout - logout of account  
