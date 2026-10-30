@@ -182,7 +182,7 @@ function handleCommand(message) {
 
     switch (command) {
         case "help":
-            console.log("Available commands: /help, /friend <username>, /unfriend <username>, /customize");
+            console.log("Available commands: /help, /friend <username>, /unfriend <username>, /customize, /logout");
             break;
 
         case "friend": {
@@ -289,7 +289,6 @@ fetch()	Retrieve data from your server
 document.createElement()	Create an element for each friend
 .appendChild()	Add each element to the page
 */
-
 
 function friendsList() {
     fetch('/users.json')
