@@ -85,6 +85,21 @@ function createMessageElement(message) {
     messageElement.appendChild(usernameElement);
     messageElement.appendChild(textElement);
 
+    let avatarNumber = Number(
+        String(message.pfp || "pfp0").replace("pfp", "")
+    );
+
+    if (!Number.isInteger(avatarNumber) || avatarNumber < 0 || avatarNumber > 23) {
+        avatarNumber = 0;
+    }
+
+    const pfp = document.createElement("img");
+
+    pfp.src = `/Assets/avatars/avatar${avatarNumber}.webp`;
+    pfp.className = "message-pfp";
+    pfp.alt = "Profile picture";
+    messageElement.appendChild(pfp);
+
     return messageElement;
 }
 
@@ -107,10 +122,13 @@ function send() {
 
     msgtime();
 
+    pfp: getCookie("Pfp") || "pfp0"
+
     const newMessage = {
         username: username,
         message: message,
-        time: time
+        time: time,
+        pfp: pfp
     };
 
     fetch("/messages.json", {

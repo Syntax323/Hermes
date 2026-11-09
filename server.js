@@ -235,50 +235,85 @@ if (req.url === "/friends" && req.method === "POST") {
         return;
     }
 
+    // GET users
+    if (req.url === "/users.json" && req.method === "GET") {
+        fs.readFile(path.join(__dirname, "users.json"), "utf8", (err, data) => {
 
-    // Serve files from public
-    let filePath;
+            if (err) {
+                console.log("Error reading users.json:", err);
 
-    if (req.url === "/") {
-        filePath = "public/index.html";
-    } else {
-        filePath = req.url.substring(1);
-    }
+                res.writeHead(500, {
+                    "Content-Type": "text/plain"
+                });
 
-    if (req.url === "/events") {
-        res.writeHead(200, {
-            "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive"
-        });
+                res.end("Error reading users");
+                return;
+            }
 
-        res.write("\n");
-        clients.add(res);
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
 
-        req.on("close", () => {
-            clients.delete(res);
+            res.end(data);
         });
 
         return;
     }
 
-    fs.readFile(filePath, (err, data) => {
-
-        if (err) {
-            console.log("File not found:", filePath);
-
-            res.writeHead(404);
-            res.end("File not found");
-            return;
-        }
-
-        res.writeHead(200);
-        res.end(data);
+// Serve files from public
+if (req.url === "/events") {
+    res.writeHead(200, {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive"
     });
-    
-    if (req.path === '/.well-known/appspecific/com.chrome.devtools.json') {
-        return res.status(204).end();
+
+    res.write("\n");
+    clients.add(res);
+
+    req.on("close", () => {
+        clients.delete(res);
+    });
+
+    return;
+}
+
+const requestedPath = new URL(req.url, "http://localhost").pathname;
+
+const filePath = requestedPath === "/"
+    ? path.join(__dirname, "public", "index.html")
+    : path.join(__dirname, "public", requestedPath);
+
+fs.readFile(filePath, (err, data) => {
+
+    if (err) {
+        console.log("File not found:", filePath);
+
+        res.writeHead(404);
+        res.end("File not found");
+        return;
     }
+
+    const ext = path.extname(filePath);
+
+    const contentTypes = {
+        ".html": "text/html",
+        ".css": "text/css",
+        ".js": "application/javascript",
+        ".json": "application/json",
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".svg": "image/svg+xml",
+        ".ico": "image/x-icon"
+    };
+
+    res.writeHead(200, {
+        "Content-Type": contentTypes[ext] || "application/octet-stream"
+    });
+
+    res.end(data);
+});
 });
 
 
