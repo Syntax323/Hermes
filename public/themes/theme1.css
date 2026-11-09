@@ -146,3 +146,20 @@ textarea, textarea:focus{
     border: none;
     outline: none;
 }
+
+.message-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.message-pfp {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    order: -1;
+}
