@@ -186,7 +186,14 @@ events.onmessage = function(event) {
 events.addEventListener("friendAdded", function(event) {
     const data = JSON.parse(event.data);
 
-    // Refresh only if the updated list belongs to this user
+    if (data.username === username) {
+        friendsList();
+    }
+});
+
+events.addEventListener("friendRemoved", function(event) {
+    const data = JSON.parse(event.data);
+
     if (data.username === username) {
         friendsList();
     }
@@ -239,41 +246,41 @@ function handleCommand(message) {
 
             break;
         }
-    case "unfriend": { // dont use this it does the same thing as friend
-            const friendUsername = args.join(" ").trim();
+    case "unfriend": {
+        const friendUsername = args.join(" ").trim();
 
-            if (!friendUsername) {
-                console.log("Usage: /unfriend <username>");
-                break;
+        if (!friendUsername) {
+            console.log("Usage: /unfriend <username>");
+            break;
+        }
+
+        fetch("/friends", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                friend: friendUsername
+            })
+        })
+        .then(async response => {
+            const data = await response.json();
+
+            console.log("Status:", response.status);
+            console.log("Response:", data);
+
+            if (!response.ok) {
+                throw new Error(data.message || "Request failed");
             }
 
-            fetch("/friends", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    friend: friendUsername
-                })
-            })
-            .then(async response => {
-                const data = await response.json();
+            console.log(data.message);
+        })
+        .catch(error => {
+            console.error("Error removing friend:", error);
+        });
 
-                console.log("Status:", response.status);
-                console.log("Response:", data);
-
-                if (!response.ok) {
-                    throw new Error(data.message || "Request failed");
-                }
-
-                console.log(data.message);
-            })
-            .catch(error => {
-                console.error("Error adding friend:", error);
-            });
-
-            break;
+        break;
     }
     case "customize": 
         window.location.href = "customize.html";
@@ -289,24 +296,6 @@ function handleCommand(message) {
             break;
     }
 }
-
-
-// friends list
-/* 
-retrieve friends from users.json
-    -get user from username
-    -find user in users.json
-    -get friends from users.json user
-display on friendslist
-
-Method/property	Purpose
-fetch()	Retrieve data from your server
-.find()	Find the current user in the array
-.friends	Access that user's friends list
-.forEach()	Iterate over each friend
-document.createElement()	Create an element for each friend
-.appendChild()	Add each element to the page
-*/
 
 function friendsList() {
     fetch('/users.json')

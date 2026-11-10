@@ -188,6 +188,65 @@ if (req.url === "/friends" && req.method === "POST") {
     return;
 }
 
+if (req.method === "DELETE" && req.url === "/friends") {
+    let body = "";
+
+    req.on("data", chunk => {
+        body += chunk;
+    });
+
+    req.on("end", () => {
+        const data = JSON.parse(body);
+
+        const users = JSON.parse(
+            fs.readFileSync("users.json", "utf8")
+        );
+
+        const currentUser = users.find(
+            user => user.username === data.username
+        );
+
+        if (!currentUser) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({
+                message: "User not found"
+            }));
+            return;
+        }
+
+        if (!currentUser.friends.includes(data.friend)) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({
+                message: "Friend not found"
+            }));
+            return;
+        }
+
+        currentUser.friends = currentUser.friends.filter(
+            friend => friend !== data.friend
+        );
+
+        fs.writeFileSync(
+            "users.json",
+            JSON.stringify(users, null, 2)
+        );
+        
+        // Tell connected clients that the friends list changed
+            for (const client of clients) {
+                client.write(`event: friendRemoved\ndata: ${JSON.stringify({
+                    username: currentUser.username,
+                    friend: data.friend
+                })}\n\n`);
+            }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+            message: `Removed ${data.friend} from your friends list`
+        }));
+    });
+
+    return;
+}
 
     if (req.url === "/users.json" && req.method === "POST") {
         let body = "";
