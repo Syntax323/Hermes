@@ -1,8 +1,8 @@
 <img src="public/Assets/images/logo.avif" width="500px">
 # Hermes
 making a chatroom messenger thing  
-node.js required (cmd: node server.js)  
-sqlite db soon™  
+node.js required  
+sqlite coming with full rewrite  
 
 # Warnings
 MAKE SURE NODE IS NOT ON SAME PORT AS LIVE PREVIEW (3000)  
@@ -21,6 +21,6 @@ SQLite DB - Currently Json db
 # Commands
 /help - show all commands  
 /friend <username> - add a friend  
-/unfriend <username> - remove a friend (Doesnt work yet)  
-/customize - send to customization page, only themes currently work  
+/unfriend <username> - remove a friend  
+/customize - send to customization page, themes and profile pictures currently work  
 /logout - logout of account  
