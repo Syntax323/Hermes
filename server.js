@@ -921,6 +921,18 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
+// Log memory usage every 10 seconds
+// setInterval(() => {
+//     const memory = process.memoryUsage();
+
+//     console.log("----- Memory Usage -----");
+//     console.log(`RSS:         ${(memory.rss / 1024 / 1024).toFixed(2)} MB`);
+//     console.log(`Heap Used:   ${(memory.heapUsed / 1024 / 1024).toFixed(2)} MB`);
+//     console.log(`Heap Total:  ${(memory.heapTotal / 1024 / 1024).toFixed(2)} MB`);
+//     console.log(`External:    ${(memory.external / 1024 / 1024).toFixed(2)} MB`);
+//     console.log(`Array Buffers: ${(memory.arrayBuffers / 1024 / 1024).toFixed(2)} MB`);
+// }, 10000);
+
 server.listen(3000, () => {
     console.log("Server running at http://127.0.0.1:3000");
 });
