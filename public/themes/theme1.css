@@ -46,3 +46,133 @@ h3.friends-title {
     background-color: #01ef54f4;
     color: white;
 }
+
+/* General button styling */
+button {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: white;
+    background-color: #006d8f;
+    border: 1px solid #00a0c4;
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+button:hover {
+    background-color: #008db0;
+    border-color: #35c9e8;
+}
+
+button:active {
+    background-color: #00536d;
+}
+
+button:disabled {
+    background-color: #303b45;
+    border-color: #4b5965;
+    color: #929ba3;
+    cursor: not-allowed;
+}
+
+/* Sidebar backgrounds */
+.sidebar,
+.members-sidebar {
+    background-color: #041120d0;
+    color: white;
+    border: 1px solid #ffffff20;
+}
+
+/* Sidebar headings */
+.sidebar h3,
+.members-heading h4 {
+    color: white;
+    font-family: sans-serif;
+}
+
+/* Create room button */
+# create-room {
+    background-color: #00a0c4;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+# create-room:hover {
+    background-color: #00bde5;
+}
+
+/* Conversation buttons */
+.conversation-button {
+    color: white;
+    background-color: #0b263bd0;
+    border: 1px solid #ffffff20;
+    text-align: left;
+    width: 100%;
+    padding: 9px 10px;
+    margin-bottom: 5px;
+}
+
+.conversation-button:hover {
+    background-color: #16415bd0;
+    border-color: #00a0c4;
+}
+
+.conversation-button.selected {
+    background-color: #006d8f;
+    border-color: #00c5ed;
+}
+
+/* Room member buttons */
+.member-row button,
+.friend-row button {
+    background-color: #0b263b;
+    border-color: #ffffff25;
+    padding: 5px 9px;
+}
+
+.member-row button:hover,
+.friend-row button:hover {
+    background-color: #16415b;
+    border-color: #00a0c4;
+}
+
+/* Add member button */
+#add-member {
+    background-color: #0086a8;
+    border-color: #00a0c4;
+}
+
+#add-member:hover {
+    background-color: #00a0c4;
+}
+
+/* Delete room button */
+#delete-room {
+    background-color: #8b2635;
+    border-color: #c44758;
+}
+
+#delete-room:hover {
+    background-color: #b52e42;
+    border-color: #ef6578;
+}
+
+/* Send button */
+.send {
+    background-color: #00a0c4;
+    color: white;
+    border: none;
+}
+
+.send:hover {
+    background-color: #00bde5;
+}
+
+.send:active {
+    background-color: #007b99;
+}

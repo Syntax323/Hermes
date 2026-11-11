@@ -4,10 +4,19 @@
         "password": "a",
         "friends": [
             "b"
-        ]
+        ],
+        "theme": "theme0",
+        "pfp": "pfp17",
+        "namecolor": "#e66565"
     },
     {
         "username": "b",
-        "password": "b"
+        "password": "b",
+        "theme": "theme1",
+        "pfp": "pfp18",
+        "namecolor": "#8e5252",
+        "friends": [
+            "a"
+        ]
     }
 ]

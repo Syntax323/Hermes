@@ -1,0 +1,49 @@
+[
+    {
+        "id": "room-75d67507-a9e2-46ff-8e92-b461fc39fab4",
+        "type": "room",
+        "name": "general",
+        "owner": "a",
+        "members": [
+            "a",
+            "b"
+        ],
+        "isPrivate": false
+    },
+    {
+        "id": "dm-6783a31eabf68ccc0660",
+        "type": "dm",
+        "name": "b",
+        "owner": null,
+        "members": [
+            "a",
+            "b"
+        ],
+        "isPrivate": true
+    },
+    {
+        "id": "room-852c3ebe-c279-414e-855f-87399318a3d7",
+        "type": "room",
+        "name": "test",
+        "owner": "b",
+        "members": [
+            "b",
+            "a"
+        ],
+        "bannedMembers": [],
+        "isPrivate": false
+    },
+    {
+        "id": "room-177328df-6189-44cd-9483-3fc76fd9cf4e",
+        "type": "room",
+        "name": "test2",
+        "owner": "b",
+        "members": [
+            "b"
+        ],
+        "bannedMembers": [
+            "a"
+        ],
+        "isPrivate": true
+    }
+]

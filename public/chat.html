@@ -1,23 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link id="theme" rel="stylesheet" href="themes/theme0.css">
-    <link id="theme" rel="stylesheet" href="themes/style.css">
+    <link rel="stylesheet" href="themes/style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Chat</title>
 </head>
+
 <body>
     <div class="background-image"></div>
+
     <div class="loggedin" id="loggedin">
-    <div class="top">
-        <div id="chat" class="chatbox"></div>
-        <div class="friends-container">
-            <h3 class="friends-title">Friends</h3>
-            <div id="friends" class="friends"></div>
+        <div class="top">
+
+            <!-- Left sidebar -->
+            <aside class="sidebar">
+
+                <section class="sidebar-section">
+                    <div class="sidebar-heading">
+                        <h3>Rooms</h3>
+                        <button id="create-room" type="button">+</button>
+                    </div>
+
+                    <div id="rooms" class="conversation-list"></div>
+                </section>
+
+                <section class="sidebar-section">
+                    <h3>Direct Messages</h3>
+                    <div id="direct-messages" class="conversation-list"></div>
+                </section>
+
+                <section class="sidebar-section">
+                    <h3>Friends</h3>
+                    <div id="friends" class="conversation-list"></div>
+                </section>
+
+                <button
+                    id="customize-profile"
+                    type="button"
+                    onclick="window.location.href='customize.html'"
+                >
+                    Edit Profile
+                </button>
+
+            </aside>
+
+            <!-- Main chat -->
+            <main class="main-chat">
+
+                <div class="chat-header">
+                    <h3 id="conversation-title">Select a conversation</h3>
+
+                    <button id="delete-room" type="button" hidden>
+                        Delete Room
+                    </button>
+                </div>
+
+                <div id="chat" class="chatbox"></div>
+
+                <div class="ui">
+                    <textarea
+                        class="typing"
+                        id="typing"
+                        placeholder="Select a conversation first..."
+                        disabled
+                    ></textarea>
+
+                    <button
+                        onclick="send()"
+                        class="send"
+                        id="send-button"
+                        disabled
+                    >
+                        SEND
+                    </button>
+                </div>
+
+            </main>
+
+            <!-- Right sidebar -->
+            <aside id="room-members-panel" class="members-sidebar" hidden>
+
+                <div class="members-heading">
+                    <h4>Room Members</h4>
+
+                    <button id="add-member" type="button" hidden>
+                        +
+                    </button>
+                </div>
+
+                <div id="room-members"></div>
+
+            </aside>
+
         </div>
     </div>
 
-         <div class="ui">
-            <textarea class="typing"id="typing"></textarea>
-            <button onclick="send()" class="send">SEND</button>
-         </div>
-        </div>
+    <script src="script.js"></script>
 </body>
-
-<script src="script.js"></script>
+</html>
